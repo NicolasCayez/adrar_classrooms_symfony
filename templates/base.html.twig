@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {# BOOTSTRAP CSS #}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         {% block stylesheets %}
         {% endblock %}
 
@@ -12,6 +14,24 @@
         {% endblock %}
     </head>
     <body>
+        <header class="navbar sticky-top bg-dark text-light">
+            <nav class="container-xxl">
+                <h1 class="navbar-brand p-0 me-0 text-light">Adrar Classroom</h1>
+                <a href="{{ path("app_home") }}" class="ps-2">Accueil</a>
+                
+                {% block navbar %}{# Bloc a remplir selon les vues #}{% endblock %}
+                {% if app.user == null %}
+                    <a href="{{ path("app_login") }}" class="ps-2 ms-auto">Se connecter</a>
+                    <a href="{{ path("app_register") }}" class="ps-2">Créer un compte</a>
+                {% else %}
+                    <p class="ps-2 ms-auto my-0 py-0">Connecté en tant que <br> {{ app.user.email }}</p>
+                    <a href="{{ path("app_logout") }}" class="ps-2 ms-1">Se déconnecter</a>
+                {% endif %}
+            </nav>
+        </header>
+
         {% block body %}{% endblock %}
+        {# BOOTSTRAP SCRIPT #}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 </html>
