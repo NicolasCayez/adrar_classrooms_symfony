@@ -47,11 +47,18 @@ class Cours
     #[ORM\OneToMany(targetEntity: Chapitres::class, mappedBy: 'id_cours')]
     private Collection $chapitres;
 
+    /**
+     * @var Collection<int, Langages>
+     */
+    #[ORM\ManyToMany(targetEntity: Langages::class, inversedBy: 'cours')]
+    private Collection $id_langages;
+
 
 
     public function __construct()
     {
         $this->chapitres = new ArrayCollection();
+        $this->id_langages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +188,30 @@ class Cours
                 $chapitre->setIdCours(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Langages>
+     */
+    public function getIdLangages(): Collection
+    {
+        return $this->id_langages;
+    }
+
+    public function addIdLangage(Langages $idLangage): static
+    {
+        if (!$this->id_langages->contains($idLangage)) {
+            $this->id_langages->add($idLangage);
+        }
+
+        return $this;
+    }
+
+    public function removeIdLangage(Langages $idLangage): static
+    {
+        $this->id_langages->removeElement($idLangage);
 
         return $this;
     }

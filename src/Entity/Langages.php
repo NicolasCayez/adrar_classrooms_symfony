@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\NiveauxRepository;
+use App\Repository\LangagesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: NiveauxRepository::class)]
-class Niveaux
+#[ORM\Entity(repositoryClass: LangagesRepository::class)]
+class Langages
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +21,7 @@ class Niveaux
     /**
      * @var Collection<int, Cours>
      */
-    #[ORM\OneToMany(targetEntity: Cours::class, mappedBy: 'id_niveau')]
+    #[ORM\ManyToMany(targetEntity: Cours::class, mappedBy: 'id_langages')]
     private Collection $cours;
 
     public function __construct()
@@ -58,7 +58,7 @@ class Niveaux
     {
         if (!$this->cours->contains($cour)) {
             $this->cours->add($cour);
-            $cour->setIdNiveau($this);
+            $cour->addIdLangage($this);
         }
 
         return $this;
@@ -67,18 +67,9 @@ class Niveaux
     public function removeCour(Cours $cour): static
     {
         if ($this->cours->removeElement($cour)) {
-            // set the owning side to null (unless already changed)
-            if ($cour->getIdNiveau() === $this) {
-                $cour->setIdNiveau(null);
-            }
+            $cour->removeIdLangage($this);
         }
 
         return $this;
     }
-
-    public function __toString()
-    {
-        return $this->getLibelle();
-    }
-
 }
