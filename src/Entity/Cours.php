@@ -39,10 +39,6 @@ class Cours
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Langages $id_langage = null;
-
-    #[ORM\ManyToOne(inversedBy: 'cours')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Niveaux $id_niveau = null;
 
     /**
@@ -50,6 +46,8 @@ class Cours
      */
     #[ORM\OneToMany(targetEntity: Chapitres::class, mappedBy: 'id_cours')]
     private Collection $chapitres;
+
+
 
     public function __construct()
     {
@@ -145,18 +143,6 @@ class Cours
         return $this;
     }
 
-    public function getIdLangage(): ?Langages
-    {
-        return $this->id_langage;
-    }
-
-    public function setIdLangage(?Langages $id_langage): static
-    {
-        $this->id_langage = $id_langage;
-
-        return $this;
-    }
-
     public function getIdNiveau(): ?Niveaux
     {
         return $this->id_niveau;
@@ -198,4 +184,5 @@ class Cours
 
         return $this;
     }
+
 }

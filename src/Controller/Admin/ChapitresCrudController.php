@@ -2,19 +2,18 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\User;
+use App\Entity\Chapitres;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class UserCrudController extends AbstractCrudController
+class ChapitresCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return User::class;
+        return Chapitres::class;
     }
 
     /*
@@ -29,12 +28,12 @@ class UserCrudController extends AbstractCrudController
     */
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('ID')->hideOnForm();
-        yield TextField::new('Email');
-        yield TextField::new('Nom');
-        yield TextField::new('Prenom');
-        yield ChoiceField::new('Roles')->allowMultipleChoices()->setChoices(['USER' => 'ROLE_USER','ADMIN' => 'ROLE_ADMIN','TATAYOYOOO' => 'TATAYOYO']);
-        yield TextField::new('Image');
-        yield TextField::new('Password');
+        yield IdField::new('ID')->hideWhenCreating();
+
+        yield TextField::new('Id_Cours'); // A changer
+        
+        yield TextField::new('Titre');
+        yield TextField::new('Contenu');
+        yield NumberField::new('Position');
     }
 }

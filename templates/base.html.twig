@@ -25,6 +25,7 @@
                     <a href="{{ path("app_register") }}" class="ps-2">Créer un compte</a>
                 {% else %}
                     <p class="ps-2 ms-auto my-0 py-0">Connecté en tant que <br> {{ app.user.email }}</p>
+                    <a href="{{ path("admin") }}" class="ps-2 ms-1">Administration</a>
                     <a href="{{ path("app_logout") }}" class="ps-2 ms-1">Se déconnecter</a>
                 {% endif %}
             </nav>
