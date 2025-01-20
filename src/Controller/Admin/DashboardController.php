@@ -67,6 +67,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Gestion cours');
         yield MenuItem::linkToCrud('Cours', 'fa fa-book', Cours::class);
         yield MenuItem::linkToCrud('Chapitres', 'fa fa-pie-chart', Chapitres::class);
+        yield MenuItem::linkToCrud('Langages', 'fa fa-language', Langages::class);
         yield MenuItem::linkToCrud('Niveaux', 'fa fa-level-up', Niveaux::class);
     }
 }

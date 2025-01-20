@@ -3,11 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Chapitres;
+use App\Entity\Cours;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 
 class ChapitresCrudController extends AbstractCrudController
 {
@@ -30,10 +33,15 @@ class ChapitresCrudController extends AbstractCrudController
     {
         yield IdField::new('ID')->hideWhenCreating();
 
-        yield TextField::new('Id_Cours'); // A changer
+        yield AssociationField::new('id_cours')
+            ->onlyOnForms()
+            ->setLabel('Langages du cours')
+            ->setQueryBuilder(
+                fn(ORMQueryBuilder $queryBuilder) => $queryBuilder->getEntityManager()->getRepository(Cours::class)->findAll()
+            );
         
         yield TextField::new('Titre');
-        yield TextField::new('Contenu');
+        yield TextEditorField::new('Contenu');
         yield NumberField::new('Position');
     }
 }

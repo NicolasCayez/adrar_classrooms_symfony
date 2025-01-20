@@ -72,4 +72,9 @@ class Langages
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getLibelle();
+    }
 }

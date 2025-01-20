@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CoursRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
+#[ApiResource]
 class Cours
 {
     #[ORM\Id]
@@ -22,8 +24,6 @@ class Cours
     #[ORM\Column(length: 100)]
     private ?string $synopsis = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $niveau = null;
 
     #[ORM\Column]
     private ?int $temps_estime = null;
@@ -86,18 +86,6 @@ class Cours
     public function setSynopsis(string $synopsis): static
     {
         $this->synopsis = $synopsis;
-
-        return $this;
-    }
-
-    public function getNiveau(): ?int
-    {
-        return $this->niveau;
-    }
-
-    public function setNiveau(int $niveau): static
-    {
-        $this->niveau = $niveau;
 
         return $this;
     }
@@ -214,6 +202,11 @@ class Cours
         $this->id_langages->removeElement($idLangage);
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitre();
     }
 
 }
